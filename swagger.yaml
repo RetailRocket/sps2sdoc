@@ -115,6 +115,57 @@ paths:
                   #/components/schemas/IncomeTransactions
         '403':
           description: Forbidden
+          
+  /s2s/portals/{portalId}/invoices:
+    get:
+      tags:
+        - Api
+      parameters:
+        - name: portalId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: finalizedAfter
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: x-UserId
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Invoices'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoices'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Invoices'
+        '403':
+          description: Forbidden
+
+          
+          
+          
 components:
   securitySchemes:
     bearerAuth:
@@ -181,8 +232,71 @@ components:
         items:
           type: array
           items:
-            $ref: >-
-              #/components/schemas/IncomeTransaction
+            $ref: '#/components/schemas/IncomeTransaction'
+        nextCursor:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Invoice:
+      required:
+        - advertiserOrganizationName
+        - advertiserOrganizationTin
+        - contractNumber
+        - contractSignedAt
+        - details
+        - finalizedAt
+        - number
+        - period
+        - serviceType
+        - sum
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+        finalizedAt:
+          type: string
+          format: date-time
+        contractNumber:
+          type: string
+        contractSignedAt:
+          type: string
+        advertiserOrganizationName:
+          type: string
+        advertiserOrganizationTin:
+          type: string
+        period:
+          $ref: '#/components/schemas/InvoicePeriod'
+        serviceType:
+          $ref: '#/components/schemas/ServiceType'
+        sum:
+          type: number
+          format: double
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceDetails'
+      additionalProperties: false
+    InvoicePeriod:
+      required:
+        - endAt
+        - startAt
+      type: object
+      properties:
+        startAt:
+          type: string
+        endAt:
+          type: string
+      additionalProperties: false
+    Invoices:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
         nextCursor:
           type: string
           nullable: true
@@ -196,6 +310,17 @@ components:
         name:
           type: string
         tin:
+          type: string
+      additionalProperties: false
+    Pair:
+      required:
+        - key
+        - value
+      type: object
+      properties:
+        key:
+          type: string
+        value:
           type: string
       additionalProperties: false
     PostAdvertisersBody:
@@ -214,11 +339,9 @@ components:
         isOwnBrand:
           type: boolean
         organization:
-          $ref: >-
-            #/components/schemas/Organization
+          $ref: '#/components/schemas/Organization'
         contract:
-          $ref: >-
-            #/components/schemas/Contract
+          $ref: '#/components/schemas/Contract'
       additionalProperties: false
     PostIncomeTransactionsBody:
       required:
@@ -238,3 +361,40 @@ components:
         details:
           type: string
       additionalProperties: false
+    ServiceDetails:
+      required:
+        - count
+        - data
+        - firstAt
+        - lastAt
+        - placement
+        - purpose
+        - sum
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        sum:
+          type: number
+          format: double
+        firstAt:
+          type: string
+          format: date-time
+        lastAt:
+          type: string
+          format: date-time
+        purpose:
+          type: string
+        placement:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pair'
+      additionalProperties: false
+    ServiceType:
+      enum:
+        - Advertising
+        - Other
+      type: string
