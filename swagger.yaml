@@ -142,29 +142,15 @@ paths:
           in: query
           schema:
             type: string
-        - name: x-UserId
-          in: header
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Invoices'
             application/json:
-              schema:
-                $ref: '#/components/schemas/Invoices'
-            text/json:
               schema:
                 $ref: '#/components/schemas/Invoices'
         '403':
           description: Forbidden
-
-          
-          
           
 components:
   securitySchemes:
