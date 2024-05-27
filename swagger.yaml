@@ -328,6 +328,8 @@ components:
           $ref: '#/components/schemas/Organization'
         contract:
           $ref: '#/components/schemas/Contract'
+        minBalance:
+          type: number
       additionalProperties: false
     PostIncomeTransactionsBody:
       required:
