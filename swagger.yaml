@@ -26,11 +26,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: x-UserId
-          in: header
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
