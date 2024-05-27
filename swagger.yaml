@@ -11,6 +11,42 @@ security:
   - bearerAuth: []        
 
 paths:
+  /s2s/portals/{portalId}/advertisers/{advertiserId}:registerOrdServiceAgreement:
+    post:
+      tags:
+        - Api
+      parameters:
+        - name: portalId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: advertiserId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-UserId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRegisterOrdServiceAgreementBody'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
   /s2s/portals/{portalId}/advertisers:
     post:
       tags:
@@ -385,4 +421,37 @@ components:
       enum:
         - Advertising
         - Other
-      type: string
+      type: string    
+    PostRegisterOrdServiceAgreementBody:
+      required:
+        - contractNumber
+        - contractSignedAt
+        - isOwnBrand
+        - legalName
+        - ogrn
+        - tin
+      type: object
+      properties:
+        isOwnBrand:
+          type: boolean
+        legalName:
+          maxLength: 200
+          minLength: 1
+          type: string
+        tin:
+          maxLength: 10
+          minLength: 10
+          type: string
+        ogrn:
+          maxLength: 13
+          minLength: 13
+          type: string
+        contractNumber:
+          maxLength: 50
+          minLength: 1
+          type: string
+        contractSignedAt:
+          maxLength: 10
+          minLength: 10
+          type: string
+      additionalProperties: false
