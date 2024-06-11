@@ -1,8 +1,8 @@
 openapi: 3.0.1
 
 info:
-  title: SponsoredProducts S2S API
-  description: This documentation generated automatically. All descriptions are provided by ChatGPT.
+  title: "SponsoredProducts S2S API"
+  description: "API for server to server integration"
   version: 1.0.0
 
 servers:
@@ -15,182 +15,182 @@ security:
 paths:
   "/s2s/portals/{portalId}/advertisers":
     post:
-      summary: Create a new advertiser
-      description: This endpoint allows you to create a new advertiser within a specific portal. The `portalId` must be provided in the path.
+      summary: "Create a new advertiser"
+      description: "This endpoint allows you to create a new advertiser within a specific portal. The `portalId` must be provided in the path."
       parameters:
         - name: portalId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the portal where the advertiser will be created.
+          description: "The unique identifier for the portal where the advertiser will be created."
       requestBody:
-        description: JSON object containing the advertiser details.
+        description: "JSON object containing the advertiser details."
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostAdvertisersBody'
+              $ref: "#/components/schemas/PostAdvertisersBody"
       responses:
-        '201':
-          description: Advertiser created successfully
+        "201":
+          description: "Advertiser created successfully"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Advertiser'
-        '400':
-          description: Invalid input data
-        '403':
-          description: Access forbidden
-        '404':
-          description: Portal not found
+                $ref: "#/components/schemas/Advertiser"
+        "400":
+          description: "Invalid Timezone or SignedAt date"
+        "403":
+          description: "Access forbidden"
+        "404":
+          description: "Portal not found"
 
   "/s2s/portals/{portalId}/advertisers/{advertiserId}:registerOrdServiceAgreement":
     post:
-      summary: Register an ORD service agreement
-      description: Use this endpoint to register an ORD service agreement for a specific advertiser in a given portal. Both `portalId` and `advertiserId` are required.
+      summary: "Register an ORD service agreement"
+      description: "Use this endpoint to register an ORD service agreement for a specific advertiser in a given portal. Both `portalId` and `advertiserId` are required."
       parameters:
         - name: portalId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the portal where the service agreement is being registered.
+          description: "The unique identifier for the portal where the service agreement is being registered."
         - name: advertiserId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the advertiser registering the service agreement.
+          description: "The unique identifier for the advertiser registering the service agreement."
       requestBody:
-        description: JSON object containing service agreement details.
+        description: "JSON object containing service agreement details."
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostRegisterOrdServiceAgreementBody'
+              $ref: "#/components/schemas/PostRegisterOrdServiceAgreementBody"
       responses:
-        '200':
-          description: Service agreement registered successfully
-        '400':
-          description: Invalid request data
-        '403':
-          description: Access forbidden
-        '404':
-          description: Advertiser or portal not found
-        '409':
-          description: Conflict with existing data
+        "200":
+          description: "Service agreement registered successfully"
+        "400":
+          description: "Invalid request data"
+        "403":
+          description: "Access forbidden"
+        "404":
+          description: "Advertiser or portal not found"
+        "409":
+          description: "Service agreement already exists"
 
   "/s2s/portals/{portalId}/incomeTransactions":
     post:
-      summary: Create a new income transaction
-      description: This endpoint is used to create a new income transaction for a specified portal. The `portalId` is required in the path.
+      summary: "Create a new income transaction"
+      description: "This endpoint is used to create a new income transaction for a specified portal. The `portalId` is required in the path."
       parameters:
         - name: portalId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the portal where the transaction will be recorded.
+          description: "The unique identifier for the portal where the transaction will be recorded."
       requestBody:
-        description: JSON object with transaction details.
+        description: "JSON object with transaction details."
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostIncomeTransactionsBody'
+              $ref: "#/components/schemas/PostIncomeTransactionsBody"
       responses:
-        '201':
-          description: Income transaction created successfully
-        '400':
-          description: Invalid transaction data
-        '403':
-          description: Access forbidden
-        '404':
-          description: Portal not found
-        '409':
-          description: Transaction conflict
+        "201":
+          description: "Income transaction created successfully"
+        "400":
+          description: "Amount is 0"
+        "403":
+          description: "Access forbidden"
+        "404":
+          description: "Portal or Advertiser not found"
+        "409":
+          description: "Transaction conflict"
 
     get:
-      summary: Retrieve income transactions
-      description: Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination.
+      summary: "Retrieve income transactions"
+      description: "Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination."
       parameters:
         - name: portalId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the portal to fetch transactions for.
+          description: "The unique identifier for the portal to fetch transactions for."
         - name: from
           in: query
           schema:
             type: string
             format: date-time
-          description: Start date-time for filtering transactions.
+          description: "Start date-time for filtering transactions."
         - name: to
           in: query
           schema:
             type: string
             format: date-time
-          description: End date-time for filtering transactions.
+          description: "End date-time for filtering transactions."
         - name: limit
           in: query
           required: true
           schema:
             type: integer
             format: int64
-          description: Maximum number of transactions to retrieve.
+          description: "Maximum number of transactions to retrieve."
         - name: cursor
           in: query
           schema:
             type: string
-          description: Cursor for paginating through results.
+          description: "Cursor for paginating through results."
       responses:
-        '200':
-          description: List of income transactions retrieved successfully
+        "200":
+          description: "List of income transactions retrieved successfully"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IncomeTransactions'
-        '403':
-          description: Access forbidden
+                $ref: "#/components/schemas/IncomeTransactions"
+        "403":
+          description: "Access forbidden"
 
   "/s2s/portals/{portalId}/invoices":
     get:
-      summary: Get invoices
-      description: Retrieve a list of invoices for a specified portal. You can use filters to get invoices finalized after a certain date.
+      summary: "Get invoices"
+      description: "Retrieve a list of invoices for a specified portal. You can use filters to get invoices finalized after a certain date."
       parameters:
         - name: portalId
           in: path
           required: true
           schema:
             type: string
-          description: The unique identifier for the portal to fetch invoices for.
+          description: "The unique identifier for the portal to fetch invoices for."
         - name: finalizedAfter
           in: query
           required: true
           schema:
             type: string
             format: date-time
-          description: Only invoices finalized after this date-time will be retrieved.
+          description: "Only invoices finalized after this date-time will be retrieved."
         - name: limit
           in: query
           required: true
           schema:
             type: integer
             format: int64
-          description: Maximum number of invoices to retrieve.
+          description: "Maximum number of invoices to retrieve."
         - name: cursor
           in: query
           schema:
             type: string
-          description: Cursor for paginating through results.
+          description: "Cursor for paginating through results."
       responses:
-        '200':
-          description: List of invoices retrieved successfully
+        "200":
+          description: "List of invoices retrieved successfully"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoices'
-        '403':
-          description: Access forbidden
+                $ref: "#/components/schemas/Invoices"
+        "403":
+          description: "Access forbidden"
 
 components:
   securitySchemes:
@@ -207,7 +207,7 @@ components:
       properties:
         id:
           type: string
-          description: The unique identifier of the advertiser.
+          description: "The unique identifier for the advertiser."
       additionalProperties: false
 
     Contract:
@@ -219,21 +219,20 @@ components:
       type: object
       properties:
         number:
-          type: string
           maxLength: 50
           minLength: 1
-          description: The contract number, a unique identifier for the contract.
+          type: string
+          description: "Contract number."
         periodStartDay:
           type: integer
           format: int64
-          description: The day of the month when the contract period starts.
+          description: "The day of the month when the billing period starts."
         signedAt:
           type: string
-          format: date-time
-          description: The date and time when the contract was signed.
+          description: "The date when the contract was signed."
         timezone:
           type: string
-          description: The timezone in which the contract was signed.
+          description: "Billing period timezone"
       additionalProperties: false
 
     IncomeTransaction:
@@ -247,21 +246,21 @@ components:
       properties:
         advertiserId:
           type: string
-          description: The unique identifier for the advertiser associated with the transaction.
+          description: "The unique identifier for the advertiser."
         amount:
           type: number
           format: double
-          description: The amount of money involved in the transaction.
+          description: "The amount involved in the transaction."
         details:
           type: string
-          description: Additional details about the transaction.
+          description: "Additional details about the transaction."
         timestamp:
           type: string
           format: date-time
-          description: The date and time when the transaction occurred.
+          description: "The date and time when the transaction occurred."
         transactionId:
           type: string
-          description: The unique identifier for the transaction.
+          description: "The unique identifier for the transaction."
       additionalProperties: false
 
     IncomeTransactions:
@@ -272,11 +271,11 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/IncomeTransaction'
-          description: An array of income transaction objects.
+            $ref: "#/components/schemas/IncomeTransaction"
+          description: "A list of income transactions."
         nextCursor:
           type: string
-          description: A cursor for paginating through the list of transactions.
+          description: "A cursor for paginating through the list of transactions."
       additionalProperties: false
 
     Invoice:
@@ -295,40 +294,39 @@ components:
       properties:
         advertiserOrganizationName:
           type: string
-          description: The name of the advertiser's organization.
+          description: "The name of the advertiser's organization."
         advertiserOrganizationTin:
           type: string
-          description: The Tax Identification Number (TIN) of the advertiser's organization.
+          description: "The Tax Identification Number (TIN) of the advertiser's organization."
         contractNumber:
           type: string
-          description: The number of the contract related to the invoice.
+          description: "Contract number"
         contractSignedAt:
           type: string
-          format: date-time
-          description: The date and time when the related contract was signed.
+          description: "The date when the contract was signed."
         details:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceDetails'
-          description: Detailed line items of the services provided.
+            $ref: "#/components/schemas/ServiceDetails"
+          description: "A list of detailed services covered by the invoice."
         finalizedAt:
           type: string
           format: date-time
-          description: The date and time when the invoice was finalized.
+          description: "The date and time when the invoice was finalized."
         number:
           type: integer
           format: int64
-          description: The invoice number, a unique identifier for the invoice.
+          description: "The unique number of the invoice."
         period:
-          $ref: '#/components/schemas/InvoicePeriod'
-          description: The period covered by the invoice.
+          $ref: "#/components/schemas/InvoicePeriod"
+          description: "The period covered by the invoice."
         serviceType:
-          $ref: '#/components/schemas/ServiceType'
-          description: The type of service provided.
+          $ref: "#/components/schemas/ServiceType"
+          description: "The type of service provided."
         sum:
           type: number
           format: double
-          description: The total amount to be paid for the invoice.
+          description: "The total amount to be paid for the invoice."
       additionalProperties: false
 
     InvoicePeriod:
@@ -339,12 +337,10 @@ components:
       properties:
         endAt:
           type: string
-          format: date-time
-          description: The end date and time of the period covered by the invoice.
+          description: "The end date of the period covered by the invoice."
         startAt:
           type: string
-          format: date-time
-          description: The start date and time of the period covered by the invoice.
+          description: "The start date of the period covered by the invoice."
       additionalProperties: false
 
     Invoices:
@@ -355,11 +351,11 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Invoice'
-          description: An array of invoice objects.
+            $ref: "#/components/schemas/Invoice"
+          description: "An array of invoice objects."
         nextCursor:
           type: string
-          description: A cursor for paginating through the list of invoices.
+          description: "A cursor for paginating through the list of invoices."
       additionalProperties: false
 
     Organization:
@@ -370,10 +366,10 @@ components:
       properties:
         name:
           type: string
-          description: The name of the organization.
+          description: "The name of the organization."
         tin:
           type: string
-          description: The Tax Identification Number (TIN) of the organization.
+          description: "The Tax Identification Number (TIN) of the organization."
       additionalProperties: false
 
     Pair:
@@ -384,10 +380,10 @@ components:
       properties:
         key:
           type: string
-          description: The key of the pair, representing an attribute name.
+          description: "The key for the service data entry."
         value:
           type: string
-          description: The value of the pair, representing the attribute's value.
+          description: "The value for the service data entry."
       additionalProperties: false
 
     PostAdvertisersBody:
@@ -399,20 +395,21 @@ components:
       type: object
       properties:
         contract:
-          $ref: '#/components/schemas/Contract'
-          description: Details of the contract related to the advertiser.
+          $ref: "#/components/schemas/Contract"
+          description: "The contract details for the new advertiser."
         minBalance:
           type: number
-          description: The minimum balance required for the advertiser's account.
+          format: double
+          description: "The minimum balance required for starting new advertisements."
         name:
           type: string
-          description: The name of the advertiser.
+          description: "The name of the advertiser."
         organization:
-          $ref: '#/components/schemas/Organization'
-          description: The organization associated with the advertiser.
+          $ref: "#/components/schemas/Organization"
+          description: "The organization details for the new advertiser."
         ownerId:
           type: string
-          description: The unique identifier for the owner of the advertiser.
+          description: "The unique identifier of the user who owns the advertiser account."
       additionalProperties: false
 
     PostIncomeTransactionsBody:
@@ -425,17 +422,17 @@ components:
       properties:
         advertiserId:
           type: string
-          description: The unique identifier for the advertiser associated with the transaction.
+          description: "The unique identifier for the advertiser involved in the transaction."
         amount:
           type: number
           format: double
-          description: The amount of money involved in the transaction.
+          description: "The amount of the income transaction."
         details:
           type: string
-          description: Additional details about the transaction.
+          description: "Additional details about the transaction."
         transactionId:
           type: string
-          description: The unique identifier for the transaction.
+          description: "The unique identifier for the transaction."
       additionalProperties: false
 
     PostRegisterOrdServiceAgreementBody:
@@ -449,34 +446,33 @@ components:
       type: object
       properties:
         contractNumber:
-          type: string
           maxLength: 50
           minLength: 1
-          description: The contract number, a unique identifier for the service agreement.
-        contractSignedAt:
           type: string
+          description: "Contract number"
+        contractSignedAt:
           maxLength: 10
           minLength: 10
-          format: date
-          description: The date when the contract was signed.
+          type: string
+          description: "The date when the contract was signed."
         isOwnBrand:
           type: boolean
-          description: Indicates whether the service agreement is for an own brand.
+          description: "Indicates whether the service is for the advertiser's own brand."
         legalName:
-          type: string
           maxLength: 200
           minLength: 1
-          description: The legal name of the entity involved in the service agreement.
-        ogrn:
           type: string
+          description: "The legal name of the advertiser."
+        ogrn:
           maxLength: 13
           minLength: 13
-          description: The Primary State Registration Number (OGRN) for the entity.
-        tin:
           type: string
+          description: "The Primary State Registration Number (OGRN) of the advertiser."
+        tin:
           maxLength: 10
           minLength: 10
-          description: The Tax Identification Number (TIN) for the entity.
+          type: string
+          description: "The Tax Identification Number (TIN) of the advertiser."
       additionalProperties: false
 
     ServiceDetails:
@@ -493,35 +489,34 @@ components:
         count:
           type: integer
           format: int64
-          description: The number of services provided.
+          description: "The number of services provided."
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Pair'
-          description: Additional data associated with the services.
+            $ref: "#/components/schemas/Pair"
+          description: "Additional data about the service."
         firstAt:
           type: string
           format: date-time
-          description: The date and time of the first service provided.
+          description: "Date and time of the first service delivery event"
         lastAt:
           type: string
           format: date-time
-          description: The date and time of the last service provided.
+          description: "Date and time of the last service delivery event"
         placement:
           type: string
-          description: The location or context in which the service was provided.
+          description: "The placement location for the service (e.g., Homepage, Sidebar)."
         purpose:
           type: string
-          description: The purpose or objective of the service provided.
+          description: "The purpose of the service."
         sum:
           type: number
           format: double
-          description: The total amount for the service provided.
+          description: "The total amount for the service."
       additionalProperties: false
 
     ServiceType:
-      type: string
       enum:
         - Advertising
         - Other
-      description: The type of service provided, which can be either 'Advertising' or 'Other'.
+      type: string
