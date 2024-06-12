@@ -23,7 +23,6 @@ paths:
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the portal where the advertiser will be created."
       requestBody:
@@ -57,14 +56,12 @@ paths:
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the portal where the service agreement is being registered."
         - name: advertiserId
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the advertiser registering the service agreement."
       requestBody:
@@ -96,7 +93,6 @@ paths:
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the portal where the transaction will be recorded."
       requestBody:
@@ -126,20 +122,17 @@ paths:
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the portal to fetch transactions for."
         - name: from
           in: query
           schema:
-            
             type: string
             format: date-time
           description: "Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination."
         - name: to
           in: query
           schema:
-            
             type: string
             format: date-time
           description: "Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination."
@@ -147,14 +140,12 @@ paths:
           in: query
           required: true
           schema:
-            
             type: integer
             format: int64
           description: "Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination."
         - name: cursor
           in: query
           schema:
-            
             type: string
           description: "Fetches a list of income transactions for a specific portal. You can filter results by date range and pagination."
       responses:
@@ -178,14 +169,12 @@ paths:
           in: path
           required: true
           schema:
-            
             type: string
           description: "The unique identifier for the portal to fetch invoices for."
         - name: finalizedAfter
           in: query
           required: true
           schema:
-            
             type: string
             format: date-time
           description: "Retrieve a list of invoices for a specified portal. You can use filters to get invoices finalized after a certain date."
@@ -193,14 +182,12 @@ paths:
           in: query
           required: true
           schema:
-            
             type: integer
             format: int64
           description: "Retrieve a list of invoices for a specified portal. You can use filters to get invoices finalized after a certain date."
         - name: cursor
           in: query
           schema:
-            
             type: string
           description: "Retrieve a list of invoices for a specified portal. You can use filters to get invoices finalized after a certain date."
       responses:
@@ -230,7 +217,6 @@ components:
       type: object
       properties:
           id:
-              
               type: string
               description: "The unique identifier for the advertiser."
       additionalProperties: false
@@ -243,22 +229,18 @@ components:
       type: object
       properties:
           number:
-              
               maxLength: 50
               minLength: 1
               type: string
               description: "Contract number."
           periodStartDay:
-              
               type: integer
               format: int64
               description: "The day of the month when the billing period starts."
           signedAt:
-              
               type: string
               description: "The date when the contract was signed."
           timezone:
-              
               type: string
               description: "Billing period timezone"
       additionalProperties: false
@@ -272,25 +254,20 @@ components:
       type: object
       properties:
           advertiserId:
-              
               type: string
               description: "The unique identifier for the advertiser."
           amount:
-              
               type: number
               format: double
               description: "The amount involved in the transaction."
           details:
-              
               type: string
               description: "Additional details about the transaction."
           timestamp:
-              
               type: string
               format: date-time
               description: "The date and time when the transaction occurred."
           transactionId:
-              
               type: string
               description: "The unique identifier for the transaction."
       additionalProperties: false
@@ -300,14 +277,11 @@ components:
       type: object
       properties:
           items:
-              
               type: array
               items:
-  
-              $ref: "#/components/schemas/IncomeTransaction"
+                $ref: "#/components/schemas/IncomeTransaction"
               description: "A list of income transactions."
           nextCursor:
-              
               type: string
               description: "A cursor for paginating through the list of transactions."
       additionalProperties: false
@@ -326,48 +300,37 @@ components:
       type: object
       properties:
           advertiserOrganizationName:
-              
               type: string
               description: "The name of the advertiser's organization."
           advertiserOrganizationTin:
-              
               type: string
               description: "The Tax Identification Number (TIN) of the advertiser's organization."
           contractNumber:
-              
               type: string
               description: "Contract number"
           contractSignedAt:
-              
               type: string
               description: "The date when the contract was signed."
           details:
-              
               type: array
               items:
-  
-              $ref: "#/components/schemas/ServiceDetails"
+                $ref: "#/components/schemas/ServiceDetails"
               description: "A list of detailed services covered by the invoice."
           finalizedAt:
-              
               type: string
               format: date-time
               description: "The date and time when the invoice was finalized."
           number:
-              
               type: integer
               format: int64
               description: "The unique number of the invoice."
           period:
-              
               $ref: "#/components/schemas/InvoicePeriod"
               description: "The period covered by the invoice."
           serviceType:
-              
               $ref: "#/components/schemas/ServiceType"
               description: "The type of service provided."
           sum:
-              
               type: number
               format: double
               description: "The total amount to be paid for the invoice."
@@ -379,11 +342,9 @@ components:
       type: object
       properties:
           endAt:
-              
               type: string
               description: "The end date of the period covered by the invoice."
           startAt:
-              
               type: string
               description: "The start date of the period covered by the invoice."
       additionalProperties: false
@@ -393,14 +354,11 @@ components:
       type: object
       properties:
           items:
-              
               type: array
               items:
-  
-              $ref: "#/components/schemas/Invoice"
+                $ref: "#/components/schemas/Invoice"
               description: "An array of invoice objects."
           nextCursor:
-              
               type: string
               description: "A cursor for paginating through the list of invoices."
       additionalProperties: false
@@ -411,11 +369,9 @@ components:
       type: object
       properties:
           name:
-              
               type: string
               description: "The name of the organization."
           tin:
-              
               type: string
               description: "The Tax Identification Number (TIN) of the organization."
       additionalProperties: false
@@ -426,11 +382,9 @@ components:
       type: object
       properties:
           key:
-              
               type: string
               description: "The key for the service data entry."
           value:
-              
               type: string
               description: "The value for the service data entry."
       additionalProperties: false
@@ -443,24 +397,19 @@ components:
       type: object
       properties:
           contract:
-              
               $ref: "#/components/schemas/Contract"
               description: "The contract details for the new advertiser."
           minBalance:
-              
               type: number
               format: double
               description: "The minimum balance required for starting new advertisements."
           name:
-              
               type: string
               description: "The name of the advertiser."
           organization:
-              
               $ref: "#/components/schemas/Organization"
               description: "The organization details for the new advertiser."
           ownerId:
-              
               type: string
               description: "The unique identifier of the user who owns the advertiser account."
       additionalProperties: false
@@ -473,20 +422,16 @@ components:
       type: object
       properties:
           advertiserId:
-              
               type: string
               description: "The unique identifier for the advertiser involved in the transaction."
           amount:
-              
               type: number
               format: double
               description: "The amount of the income transaction."
           details:
-              
               type: string
               description: "Additional details about the transaction."
           transactionId:
-              
               type: string
               description: "The unique identifier for the transaction."
       additionalProperties: false
@@ -501,35 +446,29 @@ components:
       type: object
       properties:
           contractNumber:
-              
               maxLength: 50
               minLength: 1
               type: string
               description: "Contract number"
           contractSignedAt:
-              
               maxLength: 10
               minLength: 10
               type: string
               description: "The date when the contract was signed."
           isOwnBrand:
-              
               type: boolean
               description: "Indicates whether the service is for the advertiser's own brand."
           legalName:
-              
               maxLength: 200
               minLength: 1
               type: string
               description: "The legal name of the advertiser."
           ogrn:
-              
               maxLength: 13
               minLength: 13
               type: string
               description: "The Primary State Registration Number (OGRN) of the advertiser."
           tin:
-              
               maxLength: 10
               minLength: 10
               type: string
@@ -547,37 +486,29 @@ components:
       type: object
       properties:
           count:
-              
               type: integer
               format: int64
               description: "The number of services provided."
           data:
-              
               type: array
               items:
-  
-              $ref: "#/components/schemas/Pair"
+                $ref: "#/components/schemas/Pair"
               description: "Additional data about the service."
           firstAt:
-              
               type: string
               format: date-time
               description: "Date and time of the first service delivery event"
           lastAt:
-              
               type: string
               format: date-time
               description: "Date and time of the last service delivery event"
           placement:
-              
               type: string
               description: "The placement location for the service (e.g., Homepage, Sidebar)."
           purpose:
-              
               type: string
               description: "The purpose of the service."
           sum:
-              
               type: number
               format: double
               description: "The total amount for the service."
